@@ -22,3 +22,22 @@ class Card(object):
         else:
             rank = self.rank
         return str(rank) + self.suit
+
+class Deck(object):
+    def __init__(self):
+        self.deck = []
+        for rank in Card.RANKS:
+            for suit in Card.SUITS:
+                self.deck.append(Card(rank, suit))
+    
+    def __len__(self):
+        return len(self.deck)
+
+    def shuffle(self):
+        random.shuffle(self.deck)
+
+    def deal(self):
+        if len(self) > 0:
+            return self.deck.pop(0)
+        else:
+            return None
