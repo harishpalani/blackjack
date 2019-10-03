@@ -103,21 +103,33 @@ class Game(object):
         print('Dealer: ' + str(self.dealer))
 
         while True:
-            choice = input('Hit or stand? (1 to hit, 2 to stand)')
+            choice = input('Hit or stay? (1 to hit, 2 to stay)')
             if choice in ('h', 'H', 'hit', '1'):
-                player.hit(self.deck.deal())
-                print('Player: ' + str(player))
-                if player.score() >= 21:
+                self.player.hit(self.deck.deal())
+                print('Player: ' + str(self.player))
+                if self.player.score() >= 21:
                     break
             else:
                 break
-        score = player.score()
-            
+        player_score = self.player.score()
 
         self.dealer.hit(self.deck)
+        dealer_score = self.dealer.score()
+        print('Dealer: ' + str(self.dealer) + ' - ' + str(dealer_score))
 
-
-
-
-
-            
+        if player_score > 21:
+            print('You lose!')
+        elif (dealer_score > 21) or Player.evaluate(player):
+            print('You win!')
+        elif (dealer_score == 21) or Player.evaluate(self.dealer):
+            if player_score == 21:
+                print('It\'s a tie!')
+            else:
+                print('You lose!')
+        elif dealer_score < 21:
+            if player_score > dealer_score:
+                print('You win!')
+            elif player_score < dealer_score:
+                print('You lose!')
+            else:
+                print('It\'s a tie!')
