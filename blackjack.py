@@ -90,3 +90,6 @@ class Dealer(Player):
         self.awaiting_hit = False
         while self.score() < 17:
             self.cards.append(deck.deal())
+
+class Game(object):
+    
