@@ -4,7 +4,7 @@ import random
 
 class Card(object):
     RANKS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
-    SUITS = ('C', 'D', 'H', 'S')
+    SUITS = ('Clubs', 'Diamonds', 'Hearts', 'Spades')
 
     def __init__(self, rank, suit):
         self.rank = rank
@@ -21,7 +21,7 @@ class Card(object):
             rank = 'K'
         else:
             rank = self.rank
-        return str(rank) + self.suit
+        return str(rank) + ' of ' + self.suit
 
 class Deck(object):
     def __init__(self):
@@ -41,3 +41,36 @@ class Deck(object):
             return self.deck.pop(0)
         else:
             return None
+
+class Player(object):
+    def __init__(self, cards):
+        self.cards = cards
+    
+    def __str__(self):
+        hand = ''
+        for num in range(len(self.cards)):
+            hand += (str(self.cards[num]) + ' ')
+        return (hand + ' - ' + str(self.score()) + ' points')
+    
+    def hit(self, card):
+        self.cards.append(card)
+
+    def score(self):
+        count = 0
+        for card in self.cards:
+            if card.rank == 1:
+                count += 11
+            elif card.rank > 9:
+                count += 10
+            else:
+                count += card.rank
+        
+        if count > 21:
+            for card in self.cards:
+                if card.rank == 1:
+                    count -= 10
+                    
+        return count
+    
+    def evaluate(self):
+        return (len(self.cards) == 2) and (self.score() == 21)
