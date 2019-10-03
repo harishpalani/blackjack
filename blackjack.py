@@ -82,7 +82,7 @@ class Dealer(Player):
     
     def __str__(self):
         if self.awaiting_hit:
-            return str(self.cards[0])
+            return (str(self.cards[0]) + ' - ' + str(self.cards[0])[:-1] + ' points')
         else:
             return Player.__str__(self)
 
@@ -103,10 +103,10 @@ class Game(object):
         print('Dealer: ' + str(self.dealer))
 
         while True:
-            choice = input('Hit or stay? (1 to hit, 2 to stay): ')
+            choice = input('\nHit or stay? (1 to hit, 2 to stay): ')
             if choice in ('h', 'H', 'hit', '1'):
                 self.player.hit(self.deck.deal())
-                print('\nPlayer: ' + str(self.player))
+                print('Player: ' + str(self.player))
                 if self.player.score() >= 21:
                     break
             else:
@@ -115,22 +115,22 @@ class Game(object):
 
         self.dealer.hit(self.deck)
         dealer_score = self.dealer.score()
-        print('\nDealer: ' + str(self.dealer))
-
+        print('Dealer: ' + str(self.dealer))
+        
         if player_score > 21:
-            print('You lose!')
+            print('\nYou lose!')
         elif (dealer_score > 21) or Player.evaluate(self.player):
-            print('You win!')
+            print('\nYou win!')
         elif (dealer_score == 21) or Player.evaluate(self.dealer):
             if player_score == 21:
-                print('It\'s a tie!')
+                print('\nIt\'s a tie!')
             else:
-                print('You lose!')
+                print('\nYou lose!')
         elif dealer_score < 21:
             if player_score > dealer_score:
-                print('You win!')
+                print('\nYou win!')
             elif player_score < dealer_score:
-                print('You lose!')
+                print('\nYou lose!')
             else:
                 print('It\'s a tie!')
 
