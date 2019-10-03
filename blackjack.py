@@ -69,8 +69,24 @@ class Player(object):
             for card in self.cards:
                 if card.rank == 1:
                     count -= 10
-                    
+
         return count
     
     def evaluate(self):
         return (len(self.cards) == 2) and (self.score() == 21)
+
+class Dealer(Player):
+    def __init__(self, cards):
+        Player.__init__(self, cards)
+        self.awaiting_hit = True
+    
+    def __str__(self):
+        if self.awaiting_hit:
+            return str(self.cards[0])
+        else:
+            return Player.__str__(self)
+
+    def hit(self, deck):
+        self.awaiting_hit = False
+        while self.score() < 17:
+            self.cards.append(deck.deal())
