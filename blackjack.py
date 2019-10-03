@@ -92,4 +92,32 @@ class Dealer(Player):
             self.cards.append(deck.deal())
 
 class Game(object):
-    
+    def __init__(self):
+        self.deck = Deck()
+        self.deck.shuffle()
+        self.player = Player([self.deck.deal(), self.deck.deal()])
+        self.dealer = Dealer([self.deck.deal(), self.deck.deal()])
+
+    def play(self):
+        print('Player: ' + str(self.player))
+        print('Dealer: ' + str(self.dealer))
+
+        while True:
+            choice = input('Hit or stand? (1 to hit, 2 to stand)')
+            if choice in ('h', 'H', 'hit', '1'):
+                player.hit(self.deck.deal())
+                print('Player: ' + str(player))
+                if player.score() >= 21:
+                    break
+            else:
+                break
+        score = player.score()
+            
+
+        self.dealer.hit(self.deck)
+
+
+
+
+
+            
