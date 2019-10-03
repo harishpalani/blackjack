@@ -4,7 +4,7 @@ import random
 
 class Card(object):
     RANKS = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
-    SUITS = ('Clubs', 'Diamonds', 'Hearts', 'Spades')
+    SUITS = ('C', 'D', 'H', 'S')
 
     def __init__(self, rank, suit):
         self.rank = rank
@@ -21,7 +21,7 @@ class Card(object):
             rank = 'K'
         else:
             rank = self.rank
-        return str(rank) + ' of ' + self.suit
+        return str(rank) + self.suit
 
 class Deck(object):
     def __init__(self):
@@ -103,10 +103,10 @@ class Game(object):
         print('Dealer: ' + str(self.dealer))
 
         while True:
-            choice = input('Hit or stay? (1 to hit, 2 to stay)')
+            choice = input('Hit or stay? (1 to hit, 2 to stay): ')
             if choice in ('h', 'H', 'hit', '1'):
                 self.player.hit(self.deck.deal())
-                print('Player: ' + str(self.player))
+                print('\nPlayer: ' + str(self.player))
                 if self.player.score() >= 21:
                     break
             else:
@@ -115,11 +115,11 @@ class Game(object):
 
         self.dealer.hit(self.deck)
         dealer_score = self.dealer.score()
-        print('Dealer: ' + str(self.dealer) + ' - ' + str(dealer_score))
+        print('\nDealer: ' + str(self.dealer))
 
         if player_score > 21:
             print('You lose!')
-        elif (dealer_score > 21) or Player.evaluate(player):
+        elif (dealer_score > 21) or Player.evaluate(self.player):
             print('You win!')
         elif (dealer_score == 21) or Player.evaluate(self.dealer):
             if player_score == 21:
@@ -134,6 +134,10 @@ class Game(object):
             else:
                 print('It\'s a tie!')
 
+        choice = input('\nWould you like to play again? (y for yes, n for no): ')
+        if choice in ('y', 'Y', 'yes'):
+            blackjack =  Game()
+            blackjack.play()
 
 blackjack =  Game()
 blackjack.play()
