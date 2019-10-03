@@ -133,3 +133,7 @@ class Game(object):
                 print('You lose!')
             else:
                 print('It\'s a tie!')
+
+
+blackjack =  Game()
+blackjack.play()
